@@ -20,24 +20,29 @@ def get_puzzle(puzzles):
 
 def get_win_conditions(puzzle):
     win_conditions = list(set(puzzle))
+    print(win_conditions)
     return win_conditions
 
 
-def get_guess(puzzle, mistakes):
+def get_guess():
     guess = input("Take a guess! ")
-    if guess in puzzle:
-        return guess
-    elif guess == puzzle:
-        print("You Win!")
-        menu.menu()
-    else:
-        print("Mistake!")
-        return guess
+    return guess
 
 
-def print_puzzle(puzzle, win_conditions, guess):
+def guess_check(guess, puzzle, mistakes, win_cons):
+    for i in puzzle:
+        if guess == i:
+            win_cons.append(guess)
+            return win_cons
+        else:
+            print("Mistake!")
+            mistakes.append(guess)
+            return mistakes
+
+
+def print_puzzle(puzzle, win_cons, guess):
     for w in range(0, len(puzzle[0:])):
-        if puzzle[w] == guess or puzzle[w] in win_conditions:
+        if puzzle[w] == guess or puzzle[w] in win_cons:
             print(puzzle[w], end="")
         elif puzzle[w] == " ":
             print(" ", end="")
