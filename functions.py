@@ -1,6 +1,5 @@
 import random
 import csv
-import menu
 
 
 def get_puzzles():
@@ -30,7 +29,7 @@ def get_guess():
 
 
 def guess_check(guess, puzzle, mistakes, win_cons):
-    for i in puzzle:
+    for i in range(len(puzzle)):
         if guess == i:
             win_cons.append(guess)
             return win_cons
