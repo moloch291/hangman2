@@ -1,5 +1,6 @@
 import random
 import csv
+import menu
 
 
 def get_puzzles():
@@ -19,12 +20,16 @@ def get_puzzle(puzzles):
 
 def get_win_conditions(puzzle):
     win_conditions = list(set(puzzle))
-    print(win_conditions)
     return win_conditions
 
 
-def get_guess():
-    guess = input("Take a guess! ")
+def get_guess(puzzle):
+    guess = input("\nTake a guess! ")
+    if guess == puzzle:
+        print("You Win!")
+        menu.menu()
+    elif guess == "quit":
+        menu.menu()
     return guess
 
 
@@ -32,9 +37,6 @@ def guess_check(win_conditions, win_cons, guess, mistakes):
     if guess in win_conditions:
         win_cons = win_cons.append(guess)
         return win_cons
-    elif guess in win_cons:
-        print("Mistake! You already took that guess...")
-
     else:
         print("Mistake!")
         mistakes = mistakes.append(guess)
@@ -43,9 +45,7 @@ def guess_check(win_conditions, win_cons, guess, mistakes):
 
 def print_puzzle(puzzle, win_cons, guess):
     for w in range(0, len(puzzle[0:])):
-        if puzzle[w] == guess:
-            print(puzzle[w], end="")
-        elif puzzle[w] == win_cons:
+        if puzzle[w] == guess or puzzle[w] in win_cons:
             print(puzzle[w], end="")
         elif puzzle[w] == " ":
             print(" ", end="")
