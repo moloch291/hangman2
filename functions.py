@@ -28,20 +28,24 @@ def get_guess():
     return guess
 
 
-def guess_check(guess, puzzle, mistakes, win_cons):
-    for i in range(len(puzzle)):
-        if guess == i:
-            win_cons.append(guess)
-            return win_cons
-        else:
-            print("Mistake!")
-            mistakes.append(guess)
-            return mistakes
+def guess_check(win_conditions, win_cons, guess, mistakes):
+    if guess in win_conditions:
+        win_cons = win_cons.append(guess)
+        return win_cons
+    elif guess in win_cons:
+        print("Mistake! You already took that guess...")
+
+    else:
+        print("Mistake!")
+        mistakes = mistakes.append(guess)
+        return mistakes
 
 
 def print_puzzle(puzzle, win_cons, guess):
     for w in range(0, len(puzzle[0:])):
-        if puzzle[w] == guess or puzzle[w] in win_cons:
+        if puzzle[w] == guess:
+            print(puzzle[w], end="")
+        elif puzzle[w] == win_cons:
             print(puzzle[w], end="")
         elif puzzle[w] == " ":
             print(" ", end="")
