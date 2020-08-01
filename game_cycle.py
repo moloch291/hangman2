@@ -55,10 +55,19 @@ def best_of_3():
                 print("The puzzle was: " + puzzle)
                 loses = loses + 1
                 print("Loses: " + str(loses))
-                print("Win: " + str(wins))
+                print("Wins: " + str(wins))
                 time.sleep(3)
             functions.print_puzzle(puzzle, win_cons[i], guess)
+            print("\nYour previous mistakes:")
+            for w in mistakes[i]:
+                print(w)
         print("Round won!")
         wins = wins + 1
         print("Loses: " + str(loses))
-        print("Win: " + str(wins))
+        print("Wins: " + str(wins))
+    if wins >= 2:
+        print("Congratulations! You won " + str(wins) + " out of 3.")
+        menu.menu()
+    else:
+        print("Meh... You lost " + str(loses) + " out of 3.")
+        menu.menu()
