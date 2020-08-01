@@ -48,3 +48,21 @@ def print_puzzle(puzzle, win_cons, guess):
             print(" ", end="")
         else:
             print("_", end="")
+
+
+def best_of_3_win_check(wins, losses):
+    if wins >= 2:
+        print("Congratulations! You won " + str(wins) + " out of 3.")
+        menu.menu()
+    else:
+        print("Meh... You lost " + str(losses) + " out of 3.")
+        menu.menu()
+
+
+def comment_on_score(wins, losses):
+    if wins >= 2:
+        print("Congratulations! You won " + str(wins) + " out of 3.")
+        menu.menu()
+    else:
+        print("Meh... You lost " + str(losses) + " out of 3.")
+        menu.menu()

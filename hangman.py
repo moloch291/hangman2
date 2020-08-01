@@ -2,7 +2,7 @@ import menu
 
 
 def main():
-    print("Let's play a round of hangman!")
+    print("Let's play some hangman!")
     menu.menu()
 
 
