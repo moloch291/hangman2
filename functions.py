@@ -23,12 +23,9 @@ def get_win_conditions(puzzle):
     return win_conditions
 
 
-def get_guess(puzzle):
+def get_guess():
     guess = input("\nTake a guess! ")
-    if guess == puzzle:
-        print("You Win!")
-        menu.menu()
-    elif guess == "quit":
+    if guess == "quit":
         menu.menu()
     return guess
 

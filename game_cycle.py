@@ -14,7 +14,11 @@ def single_round():
     mistakes = []
     print("You have to guess " + str(len(win_conditions)) + " letters correctly.")
     while set(win_cons) != set(win_conditions):
-        guess = functions.get_guess(puzzle)
+        guess = functions.get_guess()
+        if guess == puzzle:
+            print("You Win!")
+            time.sleep(3)
+            menu.menu()
         os.system('clear')
         functions.guess_check(win_conditions, win_cons, guess, mistakes)
         if len(mistakes) == 10:
@@ -47,7 +51,11 @@ def best_of_3():
     for i in range(len(game_puzzles)):
         puzzle = game_puzzles[i]
         while set(win_cons[i]) != set(win_conditions_lists[i]):
-            guess = functions.get_guess(puzzle)
+            guess = functions.get_guess()
+            if guess == puzzle:
+                print("You Win!")
+                time.sleep(3)
+                menu.menu()
             os.system('clear')
             functions.guess_check(win_conditions_lists[i], win_cons[i], guess, mistakes[i])
             if len(mistakes[i]) == 10:
