@@ -32,10 +32,33 @@ def best_of_3():
     print("Best of 3 challenge!\nLet's see how many of them you can guess!")
     puzzles = functions.get_puzzles()
     game_puzzles = []
+    win_conditions_lists = []
+    win_cons = [[], [], []]
+    mistakes = [[], [], []]
+    wins = 0
+    loses = 0
     for i in range(0, 3):
         puzzle = functions.get_puzzle(puzzles)
         if puzzle not in game_puzzles:
             game_puzzles.append(puzzle)
+            win_conditions_lists.append(list(set(puzzle)))
         else:
             functions.get_puzzle(puzzles)
-    print(game_puzzles)
+    for i in range(len(game_puzzles)):
+        puzzle = game_puzzles[i]
+        while set(win_cons[i]) != set(win_conditions_lists[i]):
+            guess = functions.get_guess(puzzle)
+            os.system('clear')
+            functions.guess_check(win_conditions_lists[i], win_cons[i], guess, mistakes[i])
+            if len(mistakes[i]) == 10:
+                print("Round lost!")
+                print("The puzzle was: " + puzzle)
+                loses = loses + 1
+                print("Loses: " + str(loses))
+                print("Win: " + str(wins))
+                time.sleep(3)
+            functions.print_puzzle(puzzle, win_cons[i], guess)
+        print("Round won!")
+        wins = wins + 1
+        print("Loses: " + str(loses))
+        print("Win: " + str(wins))
