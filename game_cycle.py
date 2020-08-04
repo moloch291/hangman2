@@ -48,6 +48,7 @@ def best_of_3():
         win_cons[adding] = functions.eliminate_spaces(game_puzzles, win_cons)
     wins = 0
     losses = 0
+
     for puzzle in game_puzzles:
         counter = 0
         while True:
@@ -56,12 +57,11 @@ def best_of_3():
             guess = functions.guess_check(win_conditions_lists[counter], win_cons[counter], guess, mistakes[counter])
             functions.print_puzzle(puzzle, win_cons[counter], guess)
             functions.reveal_previous_mistakes(mistakes[counter])
-            counter = counter + 1
             if functions.win_check(win_cons[counter], win_conditions_lists[counter]):
+                wins = functions.update_wins(wins, losses)
+                counter = counter + 1
                 break
-            if functions.loose_check(mistakes[counter], puzzle):
+            elif functions.loose_check(mistakes[counter], puzzle):
+                losses = functions.update_losses(losses, wins)
+                counter = counter + 1
                 break
-
-        wins = functions.update_wins(wins, losses)
-        losses = functions.update_wins(wins, losses)
-        functions.analyze_score(wins, losses)
