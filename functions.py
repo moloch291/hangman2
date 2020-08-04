@@ -61,15 +61,41 @@ def best_of_3_win_check(wins, losses):
     if wins >= 2:
         print("Congratulations! You won " + str(wins) + " out of 3.")
         menu.menu()
-    else:
+    elif losses == 10:
         print("Meh... You lost " + str(losses) + " out of 3.")
         menu.menu()
 
 
-def comment_on_score(wins, losses):
+def analyze_score(wins, losses):
     if wins >= 2:
         print("Congratulations! You won " + str(wins) + " out of 3.")
         menu.menu()
     else:
         print("Meh... You lost " + str(losses) + " out of 3.")
         menu.menu()
+
+
+def reveal_previous_mistakes(mistakes):
+    if mistakes:
+        print("\nYour previous mistakes:")
+        for element in mistakes:
+            print(element)
+
+
+def loose_check(mistakes, puzzle, losses, wins):
+    if len(mistakes) == 10:
+        print("Round lost!")
+        print("The puzzle was: " + puzzle)
+        losses = losses + 1
+        print("Loses: " + str(losses))
+        print("Wins: " + str(wins))
+        return losses
+
+
+def win_check(win_cons, win_conditions_lists, wins, losses):
+    if set(win_cons) == set(win_conditions_lists):
+        print("Round won!")
+        wins = wins + 1
+        print("Loses: " + str(losses))
+        print("Wins: " + str(wins))
+        return wins

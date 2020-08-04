@@ -38,7 +38,7 @@ def single_round():
 
 def best_of_3():
     os.system('clear')
-    print("Best of 3 challenge!\nLet's see how many of them you can guess!")
+    print("Best of 3 challenge!\nLet's see how many of them you can guess!\nWatch out for capital letters!")
     puzzles = functions.get_puzzles()
     game_puzzles = []
     win_conditions_lists = []
@@ -47,40 +47,24 @@ def best_of_3():
     wins = 0
     losses = 0
     # adding puzzles to the game puzzles list and win conditions list
-    for i in range(0, 3):
+    for adding in range(0, 3):
         puzzle = functions.get_puzzle(puzzles)
         if puzzle not in game_puzzles:
             game_puzzles.append(puzzle)
             win_conditions_lists.append(list(set(puzzle)))
-            functions.eliminate_space(puzzle, win_cons[i])
+            functions.eliminate_space(puzzle, win_cons[adding])
         else:
             functions.get_puzzle(puzzles)
-    # the following for loop defines the game cycle, one puzzle solving each time
-    for i in range(0, 3):
-        puzzle = game_puzzles[i]
+    # for loop defines the game cycle, one puzzle solving each time
+    for pz in range(0, 3):
+        puzzle = game_puzzles[pz]
         # game cycle per puzzle
-        while set(win_cons[i]) != set(win_conditions_lists[i]):
+        while wins:
             guess = functions.get_guess()
             os.system('clear')
-            functions.guess_check(win_conditions_lists[i], win_cons[i], guess, mistakes[i])
-            functions.print_puzzle(puzzle, win_cons[i], guess)
-            # display mistakes
-            if mistakes:
-                print("\nYour previous mistakes:")
-                for w in mistakes[i]:
-                    print(w)
-            # loose check
-            if len(mistakes[i]) == 10:
-                print("Round lost!")
-                print("The puzzle was: " + puzzle)
-                losses = losses + 1
-                print("Loses: " + str(losses))
-                print("Wins: " + str(wins))
-                time.sleep(2)
-                i = i + 1
-        print("Round won!")
-        wins = wins + 1
-        print("Loses: " + str(losses))
-        print("Wins: " + str(wins))
-    functions.comment_on_score(wins, losses)
-    menu.menu()
+            functions.guess_check(win_conditions_lists[pz], win_cons[pz], guess, mistakes[pz])
+            functions.print_puzzle(puzzle, win_cons[pz], guess)
+            functions.reveal_previous_mistakes(mistakes[pz])
+            losses = functions.loose_check(mistakes, puzzle, losses, wins)
+            functions.win_check(win_cons, win_conditions_lists, wins, losses)
+            functions.best_of_3_win_check(wins, losses)
