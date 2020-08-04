@@ -30,6 +30,13 @@ def get_guess():
     return guess
 
 
+def eliminate_space(puzzle, win_cons):
+    for i in range(len(puzzle)):
+        if puzzle[i] == " ":
+            win_cons = win_cons.append(puzzle[i])
+            return win_cons
+
+
 def guess_check(win_conditions, win_cons, guess, mistakes):
     if guess in win_conditions:
         win_cons = win_cons.append(guess)
