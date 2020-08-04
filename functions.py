@@ -57,13 +57,15 @@ def print_puzzle(puzzle, win_cons, guess):
             print("_", end="")
 
 
-def best_of_3_win_check(wins, losses):
-    if wins >= 2:
-        print("Congratulations! You won " + str(wins) + " out of 3.")
-        menu.menu()
-    elif losses == 10:
-        print("Meh... You lost " + str(losses) + " out of 3.")
-        menu.menu()
+def add_puzzle(puzzles, game_puzzles, win_conditions_lists, win_cons):
+    for adding in range(0, 3):
+        puzzle = get_puzzle(puzzles)
+        if puzzle not in game_puzzles:
+            game_puzzles.append(puzzle)
+            win_conditions_lists.append(list(set(puzzle)))
+            eliminate_space(puzzle, win_cons[adding])
+        else:
+            get_puzzle(puzzles)
 
 
 def analyze_score(wins, losses):
@@ -82,20 +84,60 @@ def reveal_previous_mistakes(mistakes):
             print(element)
 
 
-def loose_check(mistakes, puzzle, losses, wins):
+def loose_check(mistakes, puzzle):
     if len(mistakes) == 10:
         print("Round lost!")
         print("The puzzle was: " + puzzle)
-        losses = losses + 1
-        print("Loses: " + str(losses))
-        print("Wins: " + str(wins))
-        return losses
+        return False
+    else:
+        return True
 
 
-def win_check(win_cons, win_conditions_lists, wins, losses):
+def update_losses(losses, wins):
+    losses = losses + 1
+    print("Loses: " + str(losses))
+    print("Wins: " + str(wins))
+    return losses
+
+
+def win_check(win_cons, win_conditions_lists):
     if set(win_cons) == set(win_conditions_lists):
         print("Round won!")
-        wins = wins + 1
-        print("Loses: " + str(losses))
-        print("Wins: " + str(wins))
-        return wins
+        return False
+    else:
+        return True
+
+
+def update_wins(wins, losses):
+    wins = wins + 1
+    print("Loses: " + str(losses))
+    print("Wins: " + str(wins))
+    return wins
+
+
+def add_puzzles(puzzles):
+    game_puzzles = []
+    for adding in range(0, 3):
+        puzzle = get_puzzle(puzzles)
+        if puzzle not in game_puzzles:
+            game_puzzles.append(puzzle)
+        else:
+            get_puzzle(puzzles)
+    return game_puzzles
+
+
+def add_win_conditions_lists(game_puzzles):
+    print(game_puzzles)
+    win_conditions_lists = []
+    for puzzle in game_puzzles:
+        win_conditions_lists.append(list(set(puzzle)))
+    print(win_conditions_lists)
+    return win_conditions_lists
+
+
+def eliminate_spaces(win_cons, game_puzzles):
+    for strings in game_puzzles:
+        for char in range(len(strings)):
+            if char == " ":
+                win_cons = win_cons.append(" ")
+        return win_cons

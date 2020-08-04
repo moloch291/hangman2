@@ -40,31 +40,24 @@ def best_of_3():
     os.system('clear')
     print("Best of 3 challenge!\nLet's see how many of them you can guess!\nWatch out for capital letters!")
     puzzles = functions.get_puzzles()
-    game_puzzles = []
-    win_conditions_lists = []
+    game_puzzles = functions.add_puzzles(puzzles)
     win_cons = [[], [], []]
     mistakes = [[], [], []]
+    win_conditions_lists = functions.add_win_conditions_lists(game_puzzles)
+    for adding in range(0, 3):
+        win_cons[adding] = functions.eliminate_spaces(game_puzzles, win_cons)
     wins = 0
     losses = 0
-    # adding puzzles to the game puzzles list and win conditions list
-    for adding in range(0, 3):
-        puzzle = functions.get_puzzle(puzzles)
-        if puzzle not in game_puzzles:
-            game_puzzles.append(puzzle)
-            win_conditions_lists.append(list(set(puzzle)))
-            functions.eliminate_space(puzzle, win_cons[adding])
-        else:
-            functions.get_puzzle(puzzles)
-    # for loop defines the game cycle, one puzzle solving each time
-    for pz in range(0, 3):
-        puzzle = game_puzzles[pz]
-        # game cycle per puzzle
-        while wins:
+    for rnd in range(0, 3):
+        puzzle = game_puzzles[rnd]
+        while functions.win_check(win_cons[rnd], win_conditions_lists[rnd]) and functions.loose_check(mistakes[rnd],
+                                                                                                      puzzle):
             guess = functions.get_guess()
             os.system('clear')
-            functions.guess_check(win_conditions_lists[pz], win_cons[pz], guess, mistakes[pz])
-            functions.print_puzzle(puzzle, win_cons[pz], guess)
-            functions.reveal_previous_mistakes(mistakes[pz])
-            losses = functions.loose_check(mistakes, puzzle, losses, wins)
-            functions.win_check(win_cons, win_conditions_lists, wins, losses)
-            functions.best_of_3_win_check(wins, losses)
+            guess = functions.guess_check(win_conditions_lists[rnd], win_cons[rnd], guess, mistakes[rnd])
+            functions.print_puzzle(puzzle, win_cons[rnd], guess)
+            functions.reveal_previous_mistakes(mistakes[rnd])
+            functions.win_check(win_cons[rnd], win_conditions_lists[rnd])
+            functions.loose_check(mistakes[rnd], puzzle)
+        wins = functions.update_wins(wins, losses)
+        losses = functions.update_wins(wins, losses)
