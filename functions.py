@@ -88,9 +88,9 @@ def loose_check(mistakes, puzzle):
     if len(mistakes) == 10:
         print("Round lost!")
         print("The puzzle was: " + puzzle)
-        return False
-    else:
         return True
+    else:
+        return False
 
 
 def update_losses(losses, wins):
@@ -103,9 +103,9 @@ def update_losses(losses, wins):
 def win_check(win_cons, win_conditions_lists):
     if set(win_cons) == set(win_conditions_lists):
         print("Round won!")
-        return False
-    else:
         return True
+    else:
+        return False
 
 
 def update_wins(wins, losses):
