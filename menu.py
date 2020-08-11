@@ -9,6 +9,8 @@ def menu():
         game_cycle.single_round()
     elif option == "2":
         game_cycle.best_of_3()
+    elif option == "3":
+        game_cycle.madness()
     elif option == "4":
         print("Adios!")
         quit()

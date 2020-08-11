@@ -36,32 +36,31 @@ def single_round():
     menu.menu()
 
 
-def best_of_3():
-    os.system('clear')
-    print("Best of 3 challenge!\nLet's see how many of them you can guess!\nWatch out for capital letters!")
-    puzzles = functions.get_puzzles()
-    game_puzzles = functions.add_puzzles(puzzles)
-    win_cons = [[], [], []]
-    mistakes = [[], [], []]
-    win_conditions_lists = functions.add_win_conditions_lists(game_puzzles)
-    for adding in range(0, 3):
-        win_cons[adding] = functions.eliminate_spaces(game_puzzles, win_cons)
+def madness():
     wins = 0
     losses = 0
-
-    for puzzle in game_puzzles:
-        counter = 0
-        while True:
+    round_counter = 0
+    while losses == 0:
+        round_counter = round_counter + 1
+        os.system('clear')
+        print("You have to solve puzzles!\nLet's see how many of them can you solve in a row...")
+        print("Puzzle number {}:".format(round_counter))
+        puzzles = functions.get_puzzles()
+        puzzle = functions.get_puzzle(puzzles)
+        win_conditions = functions.get_win_conditions(puzzle)
+        win_cons = []
+        mistakes = []
+        win_cons = functions.eliminate_space(puzzle, win_cons)
+        print("You have to guess " + str(len(win_conditions)) + " letters correctly!")
+        while set(win_cons) != set(win_conditions):
             guess = functions.get_guess()
+            if guess == puzzle:
+                print("You Win!")
+                time.sleep(3)
+                menu.menu()
             os.system('clear')
-            guess = functions.guess_check(win_conditions_lists[counter], win_cons[counter], guess, mistakes[counter])
-            functions.print_puzzle(puzzle, win_cons[counter], guess)
-            functions.reveal_previous_mistakes(mistakes[counter])
-            if functions.win_check(win_cons[counter], win_conditions_lists[counter]):
-                wins = functions.update_wins(wins, losses)
-                counter = counter + 1
-                break
-            elif functions.loose_check(mistakes[counter], puzzle):
-                losses = functions.update_losses(losses, wins)
-                counter = counter + 1
-                break
+            functions.guess_check(win_conditions, win_cons, guess, mistakes)
+            if mistakes:
+                print("\nYour previous mistakes:")
+                for w in mistakes:
+                    print(w)
