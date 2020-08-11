@@ -93,13 +93,6 @@ def loose_check(mistakes, puzzle):
         return False
 
 
-def update_losses(losses, wins):
-    losses = losses + 1
-    print("Loses: " + str(losses))
-    print("Wins: " + str(wins))
-    return losses
-
-
 def win_check(win_cons, win_conditions_lists):
     if set(win_cons) == set(win_conditions_lists):
         print("Round won!")
@@ -143,11 +136,13 @@ def add_win_conditions_lists(game_puzzles):
     return win_conditions_lists
 
 
-def eliminate_spaces(win_cons, game_puzzles):
-    for strings in game_puzzles:
-        for char in range(len(strings)):
-            if char == " ":
-                win_cons = win_cons.append(" ")
+def eliminate_spaces(win_cons, puzzle):
+    win_cons = []
+    for char in puzzle:
+        if char == " ":
+            win_cons = win_cons.append(" ")
+            return win_cons
+    else:
         return win_cons
 
 
@@ -156,5 +151,3 @@ def print_mistakes(mistakes):
         print("\nYour previous mistakes:")
         for w in mistakes:
             print(w)
-
-
