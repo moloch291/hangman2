@@ -103,7 +103,7 @@ def win_check(win_cons, win_conditions_lists):
 
 def update_wins(wins, losses):
     print("You Loose!")
-    print("Wins: " + str(wins) + "Losses: " + str(losses))
+    print("Wins: " + str(wins) + " Losses: " + str(losses))
     wins = wins + 1
     return wins
 
@@ -151,3 +151,5 @@ def print_mistakes(mistakes):
         print("\nYour previous mistakes:")
         for w in mistakes:
             print(w)
+
+

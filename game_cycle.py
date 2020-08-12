@@ -40,46 +40,49 @@ def madness_main():
     wins = 0
     losses = 0
     round_counter = 0
+    print("Puzzle number {}:".format(round_counter))
     if losses == 0:
         round_counter = round_counter + 1
-        madness(wins, losses, round_counter)
+        madness(wins, losses)
+        return round_counter
     else:
-        print("You lost! You solved {} puzzles".format(round_counter))
+        print("You lost! You solved {} puzzles".format(round_counter + 1))
         menu.menu()
 
 
-def madness(wins, losses, round_counter):
-    round_counter = round_counter + 1
+def madness():
     os.system('clear')
+    wins = 0
+    losses = 0
+    round_counter = 0
     print("You have to solve puzzles!\nLet's see how many of them can you solve in a row...")
-    print("Puzzle number {}:".format(round_counter))
-    puzzles = functions.get_puzzles()
-    puzzle = functions.get_puzzle(puzzles)
-    win_conditions = functions.get_win_conditions(puzzle)
-    win_cons = []
-    mistakes = []
-    print("You have to guess " + str(len(win_conditions)) + " letters correctly!")
-    win_cons = functions.eliminate_spaces(win_cons, puzzle)
-    # game cycle per puzzle:
-    while set(win_cons) != set(win_conditions):
-        guess = functions.get_guess()
-        # instant win statement:
-        if guess == puzzle:
-            functions.update_wins(wins, losses)
-            time.sleep(3)
-            madness_main()
-        os.system('clear')
-        functions.guess_check(win_conditions, win_cons, guess, mistakes)
-        functions.print_mistakes(mistakes)
-        # lost round statement:
-        if len(mistakes) == 10:
-            functions.update_losses(wins, losses, puzzle)
-            time.sleep(2)
-            madness_main()
-        functions.print_puzzle(puzzle, win_cons, guess)
-    functions.update_wins(wins, losses)
-    time.sleep(2)
-    madness_main()
+    while losses == 0:
+        round_counter = round_counter + 1
+        puzzles = functions.get_puzzles()
+        puzzle = functions.get_puzzle(puzzles)
+        win_conditions = functions.get_win_conditions(puzzle)
+        win_cons = []
+        mistakes = []
+        print("You have to guess " + str(len(win_conditions)) + " letters correctly!")
+        win_cons = functions.eliminate_spaces(win_cons, puzzle)
+        # game cycle per puzzle:
+        while set(win_cons) != set(win_conditions):
+            guess = functions.get_guess()
+            # instant win statement:
+            if guess == puzzle:
+                wins = functions.update_wins(wins, losses)
+                time.sleep(3)
+            os.system('clear')
+            functions.guess_check(win_conditions, win_cons, guess, mistakes)
+            functions.print_mistakes(mistakes)
+            # lost round statement:
+            if len(mistakes) == 10:
+                losses = functions.update_losses(wins, losses, puzzle)
+                time.sleep(2)
+            functions.print_puzzle(puzzle, win_cons, guess)
+        wins = functions.update_wins(wins, losses)
+        time.sleep(2)
+    print("Your lost! You solved {} puzzles.".format(wins))
 
 
 #def best_of_3():

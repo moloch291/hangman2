@@ -10,7 +10,7 @@ def menu():
     #elif option == "2":
         #game_cycle.best_of_3()
     elif option == "3":
-        game_cycle.madness_main()
+        game_cycle.madness()
     elif option == "4":
         print("Adios!")
         quit()
